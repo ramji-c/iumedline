@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>IU - MEDLINE</title>
+    <meta charset="utf-8" />
+    <style>
+        .bg-1 {
+            background-color: #dbdbdb;
+            color: #dbdbdb;
+            text-emphasis-color: #c4e3f3;
+            text-align: center;
+        }
+        .bg-2 {
+            text-emphasis-color: #122b40;
+            text-emphasis-style: dot;
+            color: #122b40;
+        }
+        .ex2 {
+            max-width:1000px;
+            margin: auto;
+{#            border: 3px dotted #999999;#}
+        }
+        .ex1 {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body class="panel-body bg-1">
+    <div class="page-header bg-2">
+        <h1>PubMed MEDLINE <small>Clustered Search</small></h1>
+    </div>
+    <div class="center-block ex1" align="center">
+        {% block searchbox %}
+        {% endblock %}
+    </div>
+    <div class="center-block" align="center" style="height: 20px"> </div>
+    <div class="center-bock" align="center">
+        {% block pagination_ %}
+        {% endblock %}
+    </div>
+    <div class="center-block bg-2 ex2" align="center">
+        {% block results %}
+        {% endblock %}
+    </div>
+</body>
+</html>
