@@ -1,0 +1,27 @@
+{% extends "basicsearch/base_results.html" %}
+
+{% block results %}
+    <div class="list-group">
+        <h4 class="list-group-item-heading" align="right" style="font-style: oblique; font-size: large;font-weight: 700">Total Documents: {{ n_matches }}</h4>
+        {% for group in groups %}
+            <a href="cluster/{{ group.groupValue }}?search_term={{ search_term }}" class="list-group-item" style="border-radius: 10px; margin: 2px; height: auto; min-height: 50px; box-shadow: 5px 5px 5px #5e5e5e">
+                {% for key, val in group.items %}
+                    {% if key == 'doclist' %}
+                        {% for key, value in val.items %}
+                            {% if key == 'numFound' %}
+                                <span class="badge list-group-item-info" style="height: auto; font-size: medium; font-weight: bold">documents: {{ value }}</span>
+                            {% endif %}
+                        {% endfor %}
+                        {% for key, value in val.items %}
+                            {% if key == 'docs' %}
+                                {% for doc in value %}
+                                    <p class="list-group-item-text" align="left" style="font-style: normal; font-size: small; font-family: Arial; font-weight: 600"> {{ doc.title }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

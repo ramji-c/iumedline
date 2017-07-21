@@ -1,0 +1,22 @@
+{% extends "basicsearch/base_results.html" %}
+
+{% block results %}
+    <div class="list-group">
+        <h4 class="list-group-item-heading" align="right" style="font-weight: bold; font-style: italic">Total Documents: {{ n_matches }}</h4>
+            {% for result in results %}
+                <div class="list-group-item" style="border-radius: 10px; height: auto; margin: 2px; box-shadow: 5px 5px 5px #5e5e5e">
+                    <p align="center">
+                        <h5 class="list-group-item-heading" style="font-weight: bold; color: #265a88; font-size: small">{{ result.title }}</h5>
+                    </p>
+                    <p align="left">
+                        <b class="list-group-item-heading" style="color: #555555">Abstract: </b>
+                        <p class="list-group-item-text" align="left">Not available</p>
+                    </p>
+                    <p align="left">
+                        <b class="list-group-item-heading" style="color: #555555">Permalink: </b>
+                        <a href="{{ permalink }}{{ result.id }}" target="_blank" style="font-style: italic; font-weight: lighter">{{ permalink }}{{ result.id }}</a>
+                    </p>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock %}

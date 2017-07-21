@@ -1,15 +1,5 @@
 {% extends "basicsearch/index.html" %}
 
-{% block results %}
-    <div class="list-group">
-            {% for result in results %}
-                <a href="#" class="list-group-item" style="border-radius: 10px; height: auto">
-                    {{ result.title }} <span class="badge">{{ result.id }}</span>
-                </a>
-            {% endfor %}
-    </div>
-{% endblock %}
-
 {% block pagination_ %}
     <nav aria-label="Page navigation">
         <ul class="pagination pagination-lg">
