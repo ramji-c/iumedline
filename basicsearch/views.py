@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import SearchForm
-from .utils import fetch_group_query_results, fetch_simple_query_results
+from .utils import fetch_group_query_results, fetch_simple_query_results, fetch_cluster_keywords
 from .utils import format_facets, format_groups
 
 
@@ -55,3 +55,20 @@ def detailedresults(request, cluster_id):
                                                                  'permalink': "https://www.ncbi.nlm.nih.gov/pubmed/",
                                                                  'search_term': search_term,
                                                                  'page_num': page_num})
+
+
+# keyword results page - alternate to grouped results
+def keywordresults(request):
+    """
+    grouped results of cluster keywords for each cluster that matches input query
+    :param request: incoming HTTP request
+    :return: set of keywords for each cluster
+    """
+    form = SearchForm(request.GET)
+    search_term = request.GET.get('search_term')
+    results = fetch_cluster_keywords(search_term)
+    return render(request, 'basicsearch/keyword_results.html', {'form': form,
+                                                                'results': results,
+                                                                'n_matches': results.hits,
+                                                                'search_term': search_term,
+                                                                'page_num': 0})

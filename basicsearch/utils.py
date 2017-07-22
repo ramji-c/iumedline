@@ -36,7 +36,7 @@ def fetch_group_query_results(search_term):
     # empty search queries are too broad and don't require a filter
     # add a filter only if the first query yielded any result
     if filter_req and int(res.hits) > 0:
-        cluster_num_filter = " or ".join([str(i['clusterNum'][0]) for i in res.docs[:max_clauses]])
+        cluster_num_filter = " or ".join([str(i['clusterNum']) for i in res.docs[:max_clauses]])
         cluster_num_filter = "clusterNum: " + cluster_num_filter
     else:
         cluster_num_filter = ''
