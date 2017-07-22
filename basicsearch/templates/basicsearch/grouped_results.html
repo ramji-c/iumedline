@@ -4,12 +4,12 @@
     <div class="list-group">
         <h4 class="list-group-item-heading" align="right" style="font-style: oblique; font-size: large;font-weight: 700">Total Documents: {{ n_matches }}</h4>
         {% for group in groups %}
-            <a href="cluster/{{ group.groupValue }}?search_term={{ search_term }}" class="list-group-item" style="border-radius: 10px; margin: 2px; height: auto; min-height: 50px; box-shadow: 5px 5px 5px #5e5e5e">
+            <a href="cluster/{{ group.groupValue }}?search_term={{ search_term }}&page_num={{ page_num }}" class="list-group-item" style="border-radius: 10px; margin: 2px; height: auto; min-height: 50px; box-shadow: 5px 5px 5px #5e5e5e; background-color: #f8f8f8">
                 {% for key, val in group.items %}
                     {% if key == 'doclist' %}
                         {% for key, value in val.items %}
                             {% if key == 'numFound' %}
-                                <span class="badge list-group-item-info" style="height: auto; font-size: medium; font-weight: bold">documents: {{ value }}</span>
+                                <span class="badge list-group-item-text" style="height: auto; font-size: medium; font-weight: bold">documents: {{ value }}</span>
                             {% endif %}
                         {% endfor %}
                         {% for key, value in val.items %}

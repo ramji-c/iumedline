@@ -1,4 +1,5 @@
 {% extends "basicsearch/index.html" %}
+{% load app_filters %}
 
 {% block pagination_ %}
     <nav aria-label="Page navigation">
@@ -8,9 +9,9 @@
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-{#            {% for i in n_pages %}#}
-{#                <li><a href="#">{{ i }}</a></li>#}
-{#            {% endfor %}#}
+            {% for i in n_pages %}
+                <li><a href="#">{{ i }}</a></li>
+            {% endfor %}
             <li><a href="#">1 <span class="sr-only">(current)</span></a></li>
             <li><a href="#">2 <span class="sr-only">(current)</span></a></li>
             <li><a href="#">3</a></li>
@@ -24,3 +25,12 @@
         </ul>
     </nav>
 {% endblock %}
+
+{#{% block pagination_ %}#}
+{#<nav aria-label="results navigation">#}
+{#  <ul class="pager">#}
+{#      <li class="previous disabled"><a href="?search_term={{ search_term }}&page_num={{ page_num}}"><span aria-hidden="true">&larr;</span> Previous</a></li>#}
+{#      <li class="next"><a href="?search_term={{ search_term }}&page_num={{ page_num }}">Next <span aria-hidden="true">&rarr;</span></a></li>#}
+{#  </ul>#}
+{#</nav>#}
+{#{% endblock %}#}

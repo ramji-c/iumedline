@@ -30,7 +30,8 @@ def groupedresults(request):
                                                                 'facets': format_facets(results.facets),
                                                                 'groups': format_groups(results.grouped),
                                                                 'n_matches': results.grouped['clusterNum']['matches'],
-                                                                'search_term': search_term})
+                                                                'search_term': search_term,
+                                                                'page_num': 0})
 
 
 # detailed search results page
@@ -41,7 +42,9 @@ def detailedresults(request, cluster_id):
     :return: detailed search results page
     """
     form = SearchForm(request.GET)
-    results = fetch_simple_query_results(search_term=request.GET.get('search_term'), cluster_id=cluster_id)
+    results = fetch_simple_query_results(search_term=request.GET.get('search_term'),
+                                         cluster_id=cluster_id,
+                                         page_num=request.GET.get('page_num'))
     return render(request, 'basicsearch/detailed_results.html', {'form': form,
                                                                  'cluster_id': cluster_id,
                                                                  'results': results,

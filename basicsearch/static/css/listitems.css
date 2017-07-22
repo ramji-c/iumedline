@@ -1,0 +1,8 @@
+.list-style1 {
+    @extend .list-group-item;
+    border-radius: 10px;
+    margin: 2px;
+    height: auto;
+    min-height: 50px;
+    box-shadow: 5px 5px 5px #5e5e5e
+}

@@ -34,7 +34,8 @@ def fetch_group_query_results(search_term):
                 'fl': "clusterNum"}
     res = solr_client.search(search_term, **q_params)
     # empty search queries are too broad and don't require a filter
-    if filter_req:
+    # add a filter only if the first query yielded any result
+    if filter_req and int(res.hits) > 0:
         cluster_num_filter = " or ".join([str(i['clusterNum'][0]) for i in res.docs[:max_clauses]])
         cluster_num_filter = "clusterNum: " + cluster_num_filter
     else:
@@ -56,11 +57,12 @@ def fetch_group_query_results(search_term):
     return _cleanup(results)
 
 
-def fetch_simple_query_results(search_term, cluster_id):
+def fetch_simple_query_results(search_term, cluster_id, page_num):
     """
     find and return documents from a given cluster that match search_term
     :param search_term: keyword to be searched in Solr
     :param cluster_id: cluster to which the results must be limited to
+    :param page_num: start of results page
     :return: list of documents(within a single cluster) that match the query filter in Solr index
     """
     # set default query if search_term is empty
@@ -69,6 +71,7 @@ def fetch_simple_query_results(search_term, cluster_id):
     cluster_num_filter = 'clusterNum: ' + cluster_id
     # query docs collections filtered by clusterNum
     q_params = {'rows': row_cnt,
+                'start': page_num,
                 'fq': cluster_num_filter}
     complete_url = solr_url + doc_collection
     solr_client = pysolr.Solr(complete_url)
