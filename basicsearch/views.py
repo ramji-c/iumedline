@@ -39,14 +39,19 @@ def detailedresults(request, cluster_id):
     """
     detailed results of a single cluster of documents
     :param request: incoming HTTP request
+    :param cluster_id: cluster number to filter documents by
     :return: detailed search results page
     """
     form = SearchForm(request.GET)
-    results = fetch_simple_query_results(search_term=request.GET.get('search_term'),
+    search_term = request.GET.get('search_term')
+    page_num = int(request.GET.get('page_num'))
+    results = fetch_simple_query_results(search_term=search_term,
                                          cluster_id=cluster_id,
-                                         page_num=request.GET.get('page_num'))
+                                         page_num=page_num)
     return render(request, 'basicsearch/detailed_results.html', {'form': form,
                                                                  'cluster_id': cluster_id,
                                                                  'results': results,
                                                                  'n_matches': results.hits,
-                                                                 'permalink': "https://www.ncbi.nlm.nih.gov/pubmed/"})
+                                                                 'permalink': "https://www.ncbi.nlm.nih.gov/pubmed/",
+                                                                 'search_term': search_term,
+                                                                 'page_num': page_num})

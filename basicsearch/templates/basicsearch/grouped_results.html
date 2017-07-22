@@ -1,5 +1,9 @@
 {% extends "basicsearch/base_results.html" %}
 
+{#disbale pagination for grouped results view#}
+{% block pagination_ %}
+{% endblock %}
+
 {% block results %}
     <div class="list-group">
         <h4 class="list-group-item-heading" align="right" style="font-style: oblique; font-size: large;font-weight: 700">Total Documents: {{ n_matches }}</h4>
