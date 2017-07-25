@@ -88,6 +88,27 @@ def fetch_cluster_keywords(search_term):
     return _query_solr(solr_url, kw_collection, search_term, q_params)
 
 
+def fetch_highlighted_results(search_term, cluster_id):
+    """
+    find documents that match query criteria and return highlighted portions of each document
+    :param search_term: keyword to be searched in Solr
+    :param cluster_id: cluster to which search results should be restricted
+    :return: highlighted snippets of search results
+    """
+    # set default query if search_term is empty
+    if search_term == '':
+        search_term = '*:*'
+    # query params
+    q_params = {'fq': 'clusterNum: ' + str(cluster_id),
+                'rows': row_cnt,
+                'hl': 'true',
+                'hl.fl': 'title',
+                'hl.snippets': 2,
+                'hl.method': 'unified',
+                'hl.fragsize': 50}
+    return _query_solr(solr_url, doc_collection, search_term, q_params)
+
+
 def _cleanup(results):
     """
     cleanup input by removing non-alphanumeric characters

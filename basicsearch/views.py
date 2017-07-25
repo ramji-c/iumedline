@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import SearchForm
 from .utils import fetch_group_query_results, fetch_simple_query_results, fetch_cluster_keywords
+from .utils import fetch_highlighted_results
 from .utils import format_facets, format_groups
 
 
@@ -72,3 +73,23 @@ def keywordresults(request):
                                                                 'n_matches': results.hits,
                                                                 'search_term': search_term,
                                                                 'page_num': 0})
+
+
+# highlighted search results page - alternate to grouped and keyword results page
+def highlightedresults(request):
+    """
+    highlighted snippets of search results for each cluster that matches input query
+    :param request: incoming HTTP request
+    :return: highlighted results of snippets
+    """
+    form = SearchForm(request.GET)
+    search_term = request.GET.get('search_term')
+    results = []
+    clusters = fetch_cluster_keywords(search_term)
+    for cluster in clusters:
+        results.append(fetch_highlighted_results(search_term, cluster['clusterNum']))
+    return render(request, 'basicsearch/highlighted_results.html', {'form': form,
+                                                                    'results': results,
+                                                                    'n_matches': clusters.hits,
+                                                                    'search_term': search_term,
+                                                                    'page_num': 0})
