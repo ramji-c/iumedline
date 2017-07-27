@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import SearchForm
 from .utils import fetch_group_query_results, fetch_simple_query_results, fetch_cluster_keywords
-from .utils import fetch_highlighted_results
+from .utils import fetch_highlighted_results, filter_keywords
 from .utils import format_facets, format_groups
 
 
@@ -62,15 +62,21 @@ def detailedresults(request, cluster_id):
 def keywordresults(request):
     """
     grouped results of cluster keywords for each cluster that matches input query
+    keywords are filtered - only the intersection of keywords and select titles are shown
     :param request: incoming HTTP request
-    :return: set of keywords for each cluster
+    :return: set(filtered) of keywords for each cluster
     """
+    results = []
     form = SearchForm(request.GET)
     search_term = request.GET.get('search_term')
-    results = fetch_cluster_keywords(search_term)
+    clusters = fetch_cluster_keywords(search_term)
+    for cluster in clusters:
+        results.append((str(cluster['clusterNum']),
+                        filter_keywords(keywords=cluster['keywords'],
+                                        titles=fetch_simple_query_results(search_term, str(cluster['clusterNum']), 0))))
     return render(request, 'basicsearch/keyword_results.html', {'form': form,
                                                                 'results': results,
-                                                                'n_matches': results.hits,
+                                                                'n_matches': clusters.hits,
                                                                 'search_term': search_term,
                                                                 'page_num': 0})
 

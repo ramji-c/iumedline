@@ -6,9 +6,9 @@
 {% block results %}
     <div class="list-group">
         <h4 class="list-group-item-heading" align="left" style="font-style: oblique; font-size: large;font-weight: 700">Total clusters: {{ n_matches }}</h4>
-        {% for result in results %}
-            <a href="cluster/{{ result.clusterNum }}?search_term={{ search_term }}&page_num={{ page_num }}" class="list-group-item" style="border-radius: 10px; margin: 2px; height: auto; min-height: 50px; box-shadow: 5px 5px 5px #5e5e5e; background-color: #f8f8f8">
-                <p class="list-group-item-text"> {{ result.keywords }}</p>
+        {% for cluster_id, keywords in results %}
+            <a href="cluster/{{ cluster_id}}?search_term={{ search_term }}&page_num={{ page_num }}" class="list-group-item" style="border-radius: 10px; margin: 2px; height: auto; min-height: 50px; box-shadow: 5px 5px 5px #5e5e5e; background-color: #f8f8f8">
+                <p class="list-group-item-text"> {{ keywords }}</p>
             </a>
         {% endfor %}
     </div>

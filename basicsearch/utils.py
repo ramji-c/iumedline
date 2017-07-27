@@ -1,15 +1,15 @@
 # utility functions
 import pysolr
 
-
 # config params
 solr_url = "http://localhost:8983/solr/"
 kw_collection = "clusterkw"
 doc_collection = "abstracts"
-row_cnt = 10
+row_cnt = 200
 max_cluster_cnt = 10000
 # limit clusters used in filter to 500 - linked to maxBooleanClauses param in Solr
 max_clauses = 500
+stopwords = ['a', 'an', 'the', 'of', 'with', 'using', 'he', 'she', 'did', 'not']
 
 
 def fetch_group_query_results(search_term):
@@ -107,6 +107,25 @@ def fetch_highlighted_results(search_term, cluster_id):
                 'hl.method': 'unified',
                 'hl.fragsize': 50}
     return _query_solr(solr_url, doc_collection, search_term, q_params)
+
+
+def filter_keywords(keywords, titles):
+    """
+    compute and return set intersection of keywords and titles; keywords and Mesh terms
+    :param keywords: unfiltered set of cluster keywords
+    :param titles: select list of titles from the given cluster
+    :return: filtered set of keywords
+    """
+    title_set = set()
+    kw_set = set()
+    for kw in keywords[0].split():
+        kw_set.add(kw)
+    for title in titles:
+        # each title element is a dict in itself
+        for token in title['title'].split():
+            if token not in stopwords:
+                title_set.add(token.lower())
+    return kw_set
 
 
 def _cleanup(results):
