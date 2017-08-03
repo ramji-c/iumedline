@@ -60,7 +60,7 @@ def fetch_group_query_results(search_term):
     return _cleanup(results)
 
 
-def fetch_simple_query_results(search_term, cluster_id, page_num):
+def fetch_simple_query_results(search_term, cluster_id, page_num, num_items=row_cnt):
     """
     find and return documents from a given cluster that match search_term
     :param search_term: keyword to be searched in Solr
@@ -73,7 +73,7 @@ def fetch_simple_query_results(search_term, cluster_id, page_num):
         search_term = '*:*'
     cluster_num_filter = 'clusterNum: ' + cluster_id
     # query docs collections filtered by clusterNum
-    q_params = {'rows': row_cnt,
+    q_params = {'rows': num_items,
                 'start': page_num,
                 'fq': cluster_num_filter}
     return _cleanup(_query_solr(solr_url, doc_collection, search_term, q_params))
