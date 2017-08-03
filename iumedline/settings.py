@@ -25,7 +25,7 @@ SECRET_KEY = '@9s6nm&i*0k53rskurnp!uus+@k=*u2w8vnmuxox7pzoc7%2up'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ec2-54-191-250-32.us-west-2.compute.amazonaws.com", "127.0.0.1"]
 
 
 # Application definition
@@ -115,12 +115,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+# custom config
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
 
-# custom config
-
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+STATIC_ROOT = os.path.abspath(os.path.dirname(".")) + '/static/'

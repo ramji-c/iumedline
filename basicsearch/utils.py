@@ -114,23 +114,16 @@ def fetch_highlighted_results(search_term, cluster_id):
     return _query_solr(solr_url, doc_collection, search_term, q_params)
 
 
-def filter_keywords(keywords, titles):
+def filter_keywords(keywords):
     """
     compute and return set intersection of keywords and titles; keywords and Mesh terms
     :param keywords: unfiltered set of cluster keywords
-    :param titles: select list of titles from the given cluster
     :return: filtered set of keywords
     """
-    title_set = set()
     kw_set = set()
     for kw in keywords[0].split(", ")[:200]:
         # if kw not in _load_stopwords():
         kw_set.add(kw)
-    # for title in titles:
-    #     # each title element is a dict in itself
-    #     for token in title['title'].split():
-    #         if token not in stopwords:
-    #             title_set.add(token.lower())
     return kw_set
 
 

@@ -74,8 +74,7 @@ def keywordresults(request):
         docs_ = fetch_simple_query_results(search_term, str(cluster['clusterNum']), 0)
         if docs_.hits > 0:
             results.append((str(cluster['clusterNum']),
-                            filter_keywords(keywords=cluster['keywords'],
-                                            titles=docs_),
+                            filter_keywords(keywords=cluster['keywords']),
                             docs_.hits))
     return render(request, 'basicsearch/keyword_results.html', {'form': form,
                                                                 'results': sorted(results,
