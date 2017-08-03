@@ -15,16 +15,27 @@
             text-emphasis-color: #e0e0e0;
             color: #e0e0e0;
         }
-        .ex1 {
+        .searchdiv {
             max-width: 1000px;
             margin: auto;
         }
-        .ex2 {
+        .resultsdiv {
             max-width:1500px;
             margin: auto;
             height: auto;
             width: auto;
 {#            border: 3px dotted #999999;#}
+        }
+        .header1 {
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+        .logo1 {
+            size: 200px;
+        }
+        .logo1 img {
+            height: 100%;
+            max-width: 140px;
         }
     </style>
     {% load staticfiles %}
@@ -33,16 +44,24 @@
 </head>
 
 <body class="panel-body bg-1">
-    <div class="page-header bg-2">
-        <h1>PubMed MEDLINE <small style="color: #f7e1b5; font-weight: bold">Clustered Search</small></h1>
+    <div class="media page-header">
+        <div class="media-left logo1">
+            <div class="logo1">
+                <img class="media-object" src="static/icons/iu_trident_web_reverse.png"  />
+            </div>
+        </div>
+        <div class="bg-2 media-body">
+            <h1 class="header1" style="font-weight: bold">PubMed MEDLINE <small style="color: #f7e1b5; font-weight: 600">Clustered Search</small></h1>
+            <h4 style="font-weight: lighter; color: #9acfea; font-style: italic">Indiana University - Data Science</h4>
+        </div>
     </div>
     <div class="center-block">
-        <div class="ex1" align="center">
+        <div class="searchdiv" align="center">
             {% block searchbox %}
             {% endblock %}
         </div>
         <div align="center" style="height: 20px"> </div>
-        <div class="bg-2 ex2" align="center">
+        <div class="bg-2 resultsdiv" align="center">
             <div align="right">
                 {% block pagination_ %}
                 {% endblock %}

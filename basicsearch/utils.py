@@ -1,5 +1,7 @@
 # utility functions
 import pysolr
+import os
+from django.conf import settings
 
 # config params
 solr_url = "http://localhost:8983/solr/"
@@ -9,7 +11,10 @@ row_cnt = 200
 max_cluster_cnt = 10000
 # limit clusters used in filter to 500 - linked to maxBooleanClauses param in Solr
 max_clauses = 500
-stopwords = ['a', 'an', 'the', 'of', 'with', 'using', 'he', 'she', 'did', 'not']
+stopwords = []
+mesh_terms = []
+mesh_file = os.path.join(settings.PROJECT_ROOT, '2017MeshTree.txt')
+stopwords_file = os.path.join(settings.PROJECT_ROOT, 'stopwords.txt')
 
 
 def fetch_group_query_results(search_term):
@@ -118,13 +123,14 @@ def filter_keywords(keywords, titles):
     """
     title_set = set()
     kw_set = set()
-    for kw in keywords[0].split():
+    for kw in keywords[0].split(", ")[:200]:
+        # if kw not in _load_stopwords():
         kw_set.add(kw)
-    for title in titles:
-        # each title element is a dict in itself
-        for token in title['title'].split():
-            if token not in stopwords:
-                title_set.add(token.lower())
+    # for title in titles:
+    #     # each title element is a dict in itself
+    #     for token in title['title'].split():
+    #         if token not in stopwords:
+    #             title_set.add(token.lower())
     return kw_set
 
 
@@ -174,3 +180,26 @@ def _query_solr(url_, col, q, q_params):
     complete_url = url_ + col
     solr_client = pysolr.Solr(url=complete_url)
     return solr_client.search(q, **q_params)
+
+
+def _load_stopwords():
+    # load stopwords from file if stopwords list is empty
+    if len(stopwords) == 0:
+        with open(stopwords_file) as file:
+            line = file.readline()
+            while line:
+                stopwords.append(line.strip())
+                line = file.readline()
+    return stopwords
+
+
+def _load_meshterms():
+    # load flattened MeSH terms tree
+    if len(mesh_terms) == 0:
+        with open(mesh_file, encoding='utf-8') as file:
+            line = file.readline()
+            while line:
+                mesh_terms.append(line.strip().split())
+                line = file.readline()
+    print(mesh_terms)
+    return mesh_terms

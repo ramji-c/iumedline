@@ -71,11 +71,16 @@ def keywordresults(request):
     search_term = request.GET.get('search_term')
     clusters = fetch_cluster_keywords(search_term)
     for cluster in clusters:
-        results.append((str(cluster['clusterNum']),
-                        filter_keywords(keywords=cluster['keywords'],
-                                        titles=fetch_simple_query_results(search_term, str(cluster['clusterNum']), 0))))
+        docs_ = fetch_simple_query_results(search_term, str(cluster['clusterNum']), 0)
+        if docs_.hits > 0:
+            results.append((str(cluster['clusterNum']),
+                            filter_keywords(keywords=cluster['keywords'],
+                                            titles=docs_),
+                            docs_.hits))
     return render(request, 'basicsearch/keyword_results.html', {'form': form,
-                                                                'results': results,
+                                                                'results': sorted(results,
+                                                                                  key=lambda x: x[2],
+                                                                                  reverse=True),
                                                                 'n_matches': clusters.hits,
                                                                 'search_term': search_term,
                                                                 'page_num': 0})
