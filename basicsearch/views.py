@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import HttpResponse
 from .forms import SearchForm
 from .utils import fetch_group_query_results, fetch_simple_query_results, fetch_cluster_keywords
 from .utils import fetch_highlighted_results, filter_keywords
@@ -67,6 +69,8 @@ def keywordresults(request):
     :return: set(filtered) of keywords for each cluster
     """
     results = []
+    if request.is_ajax():
+        print("Yas")
     form = SearchForm(request.GET)
     search_term = request.GET.get('search_term')
     clusters = fetch_cluster_keywords(search_term)
@@ -104,3 +108,15 @@ def highlightedresults(request):
                                                                     'n_matches': clusters.hits,
                                                                     'search_term': search_term,
                                                                     'page_num': 0})
+
+@csrf_exempt
+# view to remove keyword and add it to stopword list
+def removekeyword(request):
+    """
+    get the POSTed keyword and add it to stopwords list
+    :param request: incoming HTTP request
+    :return: True if update was successful, False otherwise
+    """
+    if request.is_ajax():
+        print(request.POST.get('keyword'))
+        return HttpResponse("True")

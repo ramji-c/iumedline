@@ -73,4 +73,24 @@
         </div>
     </div>
 </body>
+<script src={% static 'js/jquery-3.1.0.min.js' %}></script>
+    <script>
+        var status_ = "Failure";
+        $(document).ready(function(){
+            $("[id^=kw_]").click(function(){
+{#                $(this).toggle();#}
+                $.post({
+                    url: "/remove/",
+                    data: {
+                        'keyword': this.name
+                    }
+                }).done( function () {
+                    status_ = "Success";
+                });
+                if( status_ === "Success") {
+                  $(this).toggle();
+                }
+            });
+        });
+    </script>
 </html>
