@@ -31,11 +31,13 @@
             padding-bottom: 25px;
         }
         .logo1 {
-            size: 200px;
+            max-width: 200px;
+            max-height: 200px;
+            padding-top: 18px;
         }
         .logo1 img {
-            height: 100%;
-            max-width: 140px;
+            height: 120px;
+            max-width: 120px;
         }
     </style>
     {% load staticfiles %}
@@ -45,7 +47,7 @@
 
 <body class="panel-body bg-1">
     <div class="media page-header">
-        <div class="media-left logo1">
+        <div class="media-left">
             <div class="logo1">
                 <img class="media-object" src="{% static 'icons/iu_trident_web_reverse.png' %}"  />
             </div>

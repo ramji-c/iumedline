@@ -7,17 +7,21 @@
     <div class="list-group">
         <h4 class="list-group-item-heading" align="left" style="font-style: oblique; font-size: large;font-weight: 700">Total clusters: {{ n_matches }}</h4>
         {% for cluster_id, keywords, docs, n_docs in results %}
-            <a href="cluster/{{ cluster_id}}?search_term={{ search_term }}&page_num={{ page_num }}" class="list-group-item" style="border-radius: 10px; margin: 2px; height: auto; min-height: 50px; box-shadow: 5px 5px 5px #5e5e5e; background-color: #f8f8f8">
+            <a href="cluster/{{ cluster_id}}?search_term={{ search_term }}&page_num={{ page_num }}"  class="list-group-item" style="border-radius: 10px; margin: 2px; height: auto; min-height: 50px; box-shadow: 5px 5px 5px #5e5e5e; background-color: #f8f8f8">
                 <span class="badge list-group-item-info" style="height: auto; font-size: medium; font-weight: bold">documents: {{ n_docs }}</span>
                 {% for doc in docs %}
                     <p class="list-group-item-text" style="font-weight: 300; font-style: normal; color: #003366; padding: 5px; font-family: 'Open Sans'" align="left">{{ doc.title }}</p>
                 {% endfor %}
-            <div style="background-color: #fcf8e3; padding-top: 10px; padding-bottom: 10px; margin-top: 10px">
-                <h4 class="list-group-item-heading" align="center" style="padding-bottom: 5px; font-style: normal; font-weight: bold; font-size: larger; font-family: 'Helvetica Neue'">Cluster Keywords: </h4>
-                <p class="list-group-item-text" style="word-spacing: 3px; font-family: 'Bitstream Vera Sans'"> {{ keywords }}</p>
-            </div>
-
-            </a>
+                <div style="background-color: #fcf8e3; padding-top: 10px; padding-bottom: 10px; margin-top: 10px">
+                    <h4 class="list-group-item-heading" align="center" style="padding-bottom: 5px; font-style: normal; font-weight: bold; font-size: larger; font-family: 'Helvetica Neue'">Cluster Keywords: </h4>
+    {#                <p class="list-group-item-text" style="word-spacing: 3px; font-family: 'Bitstream Vera Sans'"> {{ keywords }}</p>#}
+                    {% for keyword in keywords %}
+                        <button type="button" class="btn btn-default">
+                        {{ keyword }} <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                    {% endfor %}
+                </div>
+             </a>
         {% endfor %}
     </div>
 {% endblock %}
