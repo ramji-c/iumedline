@@ -109,6 +109,7 @@ def highlightedresults(request):
                                                                     'search_term': search_term,
                                                                     'page_num': 0})
 
+
 @csrf_exempt
 # view to remove keyword and add it to stopword list
 def removekeyword(request):
@@ -119,4 +120,4 @@ def removekeyword(request):
     """
     if request.is_ajax():
         print(request.POST.get('keyword'))
-        return HttpResponse("True")
+        return HttpResponse(request.POST.get('keyword'))
