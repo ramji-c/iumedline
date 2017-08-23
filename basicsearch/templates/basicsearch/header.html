@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <style>
         .bg-1 {
-            background-color: #777777;
+            background-color: #3c3c3c;
             color: #dbdbdb;
             text-emphasis-color: #c4e3f3;
             text-align: center;
@@ -24,20 +24,20 @@
             margin: auto;
             height: auto;
             width: auto;
-{#            border: 3px dotted #999999;#}
         }
         .header1 {
             padding-top: 25px;
             padding-bottom: 25px;
         }
         .logo1 {
-            max-width: 200px;
-            max-height: 200px;
-            padding-top: 18px;
+            max-width: 300px;
+            max-height: 300px;
+            padding-top: 60px;
         }
         .logo1 img {
-            height: 120px;
-            max-width: 120px;
+            height: 250px;
+            max-width: 250px;
+            padding-bottom: 30px;
         }
         .alerts {
             width: auto;
@@ -47,6 +47,45 @@
             display: none;
             font-weight: 600;
         }
+        .icon-button {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            outline: none;
+            border: 0;
+            background: transparent;
+        }
+        .credits {
+            font-style: oblique;
+            font-weight: 500;
+            font-family: "Open Sans";
+        }
+        .aboutpage {
+            color: #3c3c3c;
+            max-width: 1500px;
+            min-width: 1000px;
+            max-height: 1200px;
+            align-self: center;
+            font-family: 'Open Sans';
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        .aboutpage h3 {
+            font-weight: bolder;
+            font-size: xx-large;
+            font-family: 'Helvetica Neue';
+        }
+        .aboutpage h4 {
+            font-weight: bold;
+            font-size: large;
+        }
+        .aboutpage h5 {
+            font-weight: 500;
+            font-size: medium;
+        }
+        .aboutpage p {
+            font-size: medium;
+        }
     </style>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
@@ -54,15 +93,21 @@
 </head>
 
 <body class="panel-body bg-1">
-    <div class="media page-header">
+    <div class="media page-header" style="margin-top: -45px">
         <div class="media-left">
             <div class="logo1">
-                <img class="media-object" src="{% static 'icons/iu_trident_web_reverse.png' %}"  />
+                <img class="media-object" src="{% static 'icons/iu_trident_web_crimson.png' %}"  />
             </div>
         </div>
-        <div class="bg-2 media-body">
-            <h1 class="header1" style="font-weight: bold">PubMed MEDLINE <small style="color: #f7e1b5; font-weight: 600">Clustered Search</small></h1>
-            <h4 style="font-weight: lighter; color: #9acfea; font-style: italic">Indiana University - Data Science</h4>
+        <div class="bg-2 media-body" style="padding-right: 100px">
+            <h1 class="header1" style="font-weight: bold; font-size: 44px; font-family: 'Helvetica Neue'">PubMed MEDLINE <br><small style="color: #eb9316; font-weight: 600">clustered search</small></h1>
+            <h4 style="font-weight: lighter; font-family: 'Open Sans'">Powered by: </h4>
+            <h4 class="credits">Indiana University - Data Science Consulting Club</h4>
+            <h4 class="credits">Indiana University - High-Performance Computing</h4>
+            <h4 class="credits">Indiana University - School of Informatics and Computing</h4>
+        </div>
+        <div class="media-right" style="padding-top: 40px">
+            <a href="#" id="about" style="font-weight: bolder; font-size: medium; color: #f8f8f8; font-family: 'Open Sans'" data-toggle="modal" data-target="#aboutModal">About</a>
         </div>
     </div>
     <div class="center-block">
@@ -80,28 +125,82 @@
             {% endblock %}
         </div>
     </div>
+    <div id="aboutModal" class="modal" role="dialog" aria-labelledby="aboutModalTitle" style="width: auto">
+        <div class="modal-dialog aboutpage" role="document">
+            <div class="modal-content aboutpage">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title aboutpage" id="aboutModalTitle">Clustered PubMed MEDLINE</h3>
+                </div>
+                <div class="modal-body" style="max-width: 100%; text-align: left">
+                    <h4 class="aboutpage">Created by Indiana University (USA): </h4>
+                    <h5 class="aboutpage">Data Science Consulting Club</h5>
+                    <h5 class="aboutpage">Data Science Department: <a href="http://iudatascience.com" target="_blank">http://iudatascience.com</a></h5>
+                    <h5 class="aboutpage">High-Performance Computing: <a href="https://www.soic.indiana.edu/faculty-research/research/high-performance-computing.html" target="_blank">https://www.soic.indiana.edu/faculty-research/research/high-performance-computing.html</a></h5>
+                    <h5 class="aboutpage">School of Informatics and Computing: <a href="http://www.soic.indiana.edu/" target="_blank">http://www.soic.indiana.edu/</a></h5>
+                    <hr>
+                    <h4 class="aboutpage">Clustering Information: </h4>
+                    <h5 class="aboutpage">Number of documents clustered: <i style="color: #5b80b2">5 million</i></h5>
+                    <h5 class="aboutpage">Date of download from NCBI:<i style="color: #5b80b2"> NA</i></h5>
+                    <h5 class="aboutpage">Timeframe encompassed by tranche:<i style="color: #5b80b2"> NA</i></h5>
+                    <h5 class="aboutpage">Tranche topic:<i style="color: #5b80b2"> Non-topical</i></h5>
+                    <h5 class="aboutpage">Pre-set number of clusters:<i style="color: #5b80b2"> 500</i></h5>
+                    <h5 class="aboutpage">Pre-set number of keywords per cluster:<i style="color: #5b80b2"> 2000</i></h5>
+                    <h5 class="aboutpage">Number of keywords shown:<i style="color: #5b80b2"> 100</i></h5>
+                    <h5 class="aboutpage">Machine used to cluster: <u><a href="https://kb.iu.edu/d/aolp" target="_blank">Carbonate</a></u></h5>
+                    <h5 class="aboutpage">Clustering time:<i style="color: #5b80b2"> 5 hours</i></h5>
+                    <hr>
+                    <h4 class="aboutpage">Developers: </h4>
+                    <h5 class="aboutpage"><a href="http://www.linkedin.com/in/ramji-chandrasekaran" target="_blank">Ramji Chandrasekaran</a></h5>
+                    <h5 class="aboutpage">Derek Kueter</h5>
+                    <h5 class="aboutpage">Sujay Madbhavi</h5>
+                    <h5 class="aboutpage">Charlene Tay</h5>
+                    <hr>
+                    <h4 class="aboutpage">Advisors: </h4>
+                    <h5 class="aboutpage">Jeff Bierach</h5>
+                    <h5 class="aboutpage">Scott Michael</h5>
+                    <h5 class="aboutpage">Jim Reekes</h5>
+                    <h5 class="aboutpage">Kyle Stirling</h5>
+                    <h5 class="aboutpage">Jason Burton Thomas</h5>
+                    <h5 class="aboutpage">Esen Tuna</h5>
+                    <hr>
+                    <p>PubMed MEDLINE is a free service provided to the world by the U.S. National Library of Medicine since 1879.
+                        <a href="https://www.ncbi.nlm.nih.gov/pubmed/" target="_blank">https://www.ncbi.nlm.nih.gov/pubmed/</a>
+                        <br>5.2 billion searches were performed on MEDLINE in 2016.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src={% static 'js/jquery-3.1.0.min.js' %}></script>
     <script>
         var status_ = "Failure";
         $(document).ready(function(){
             $("[id^=kw_]").click(function(){
-{#                $(this).toggle();#}
                 $.post({
                     url: "/remove/",
                     data: {
                         'keyword': this.name
                     }
                 }).done( function (data) {
-                    $('div.success').text("Added '" + data + "' to stopwords list").fadeIn().delay(1000).fadeOut();
-                    status_ = "Success";
+                     $('div.success').text("Added '" + data + "' to stopwords list").fadeIn().delay(500).fadeOut();
+                     status_ = "Success";
                 });
                 if( status_ === "Success") {
-                  $(this).toggle();
+                    $(this).toggle();
                 } else {
-                    $('div.warning').text("Failed to add keyword to stopwords list").fadeIn().delay(1000).fadeOut();
+                    $('div.warning').text("Failed to add keyword to stopwords list").fadeIn().delay(500).fadeOut();
                 }
             });
+            $("[id^=hide_cl_]").click(function () {
+                $(this).parent().toggle();
+            });
+            $("#about").click(function () {
+                $("#aboutModal").fadeIn();
+            });
+            $('button.close').click(function () {
+                $("#aboutModal").delay(200).fadeOut();
+            })
         });
     </script>
 </html>

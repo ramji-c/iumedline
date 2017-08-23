@@ -4,6 +4,7 @@ import os
 from django.conf import settings
 
 # config params
+# TODO needs to be put in a separate file
 solr_url = "http://localhost:8983/solr/"
 kw_collection = "clusterkw"
 doc_collection = "abstracts"
@@ -74,7 +75,7 @@ def fetch_simple_query_results(search_term, cluster_id, page_num, num_items=row_
     cluster_num_filter = 'clusterNum: ' + cluster_id
     # query docs collections filtered by clusterNum
     q_params = {'rows': num_items,
-                'start': page_num,
+                'start': (page_num * num_items),
                 'fq': cluster_num_filter}
     return _cleanup(_query_solr(solr_url, doc_collection, search_term, q_params))
 
@@ -121,7 +122,7 @@ def filter_keywords(keywords):
     :return: filtered set of keywords
     """
     kw_set = set()
-    for kw in keywords[0].split(", ")[:200]:
+    for kw in keywords[0].split(", ")[:100]:
         # if kw not in _load_stopwords():
         kw_set.add(kw)
     return kw_set

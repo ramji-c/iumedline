@@ -3,14 +3,19 @@
 
 {% block pagination_ %}
 <nav aria-label="results navigation">
-  <ul class="pager">
-      {% if  page_num == 0 %}
-          <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-      {% endif %}
-      {% if page_num > 0 %}
-          <li class="previous"><a href="?search_term={{ search_term }}&page_num={{ page_num|dec}}"><span>&larr;</span> Previous</a></li>
-      {% endif %}
-      <li class="next"><a href="?search_term={{ search_term }}&page_num={{ page_num|inc }}">Next <span>&rarr;</span></a></li>
-  </ul>
+    <ul class="pager">
+        {% if page_num == 0 %}
+            <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+        {% endif %}
+        {% if page_num > 0 %}
+            <li class="previous"><a href="?search_term={{ search_term }}&page_num={{ page_num|dec}}"><span>&larr;</span> Previous</a></li>
+        {% endif %}
+        {% if n_docs >= limit %}
+            <li class="next"><a href="?search_term={{ search_term }}&page_num={{ page_num|inc }}">Next <span>&rarr;</span></a></li>
+        {% endif %}
+        {% if n_docs < limit %}
+            <li class="next disabled"><a href="#">Next <span>&rarr;</span></a></li>
+        {% endif %}
+    </ul>
 </nav>
 {% endblock %}

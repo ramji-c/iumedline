@@ -50,11 +50,14 @@ def detailedresults(request, cluster_id):
     page_num = int(request.GET.get('page_num'))
     results = fetch_simple_query_results(search_term=search_term,
                                          cluster_id=cluster_id,
-                                         page_num=page_num)
+                                         page_num=page_num,
+                                         num_items=10)
     return render(request, 'basicsearch/detailed_results.html', {'form': form,
                                                                  'cluster_id': cluster_id,
                                                                  'results': results,
                                                                  'n_matches': results.hits,
+                                                                 'n_docs': len(results.docs),
+                                                                 'limit': 10,
                                                                  'permalink': "https://www.ncbi.nlm.nih.gov/pubmed/",
                                                                  'search_term': search_term,
                                                                  'page_num': page_num})
